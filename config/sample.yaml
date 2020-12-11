@@ -1,0 +1,19 @@
+wechat:
+  http: "http://127.0.0.1:5555"
+  ws: "ws://127.0.0.1:5555"
+
+# 以下为任务
+netease:
+  host: "http://127.0.0.1:3000"
+  pre: "2020-10-10"
+  spec: "*/5 * * * *"
+  user:
+    - "xxx" # wxid
+    - "xxx" # wxid
+
+gocn:
+  pre: "2020-10-10"
+  spec: "*/5 * * * *"
+  user:
+    - "xxx" # wxid
+    - "xxx" # wxid

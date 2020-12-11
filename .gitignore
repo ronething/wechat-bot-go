@@ -4,3 +4,6 @@
 go.sum
 
 *.jpg
+*.exe
+
+config/config.yaml
