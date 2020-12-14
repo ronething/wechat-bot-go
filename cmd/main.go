@@ -5,13 +5,13 @@ import (
 	"fmt"
 	wechat_bot_go "github.com/ronething/wechat-bot-go"
 	"github.com/ronething/wechat-bot-go/config"
-	 "github.com/ronething/wechat-bot-go/scheduler"
+	"github.com/ronething/wechat-bot-go/scheduler"
+	"github.com/ronething/wechat-bot-go/server"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
-
 )
 
 var (
@@ -45,10 +45,12 @@ func main() {
 	//httpBot := wechat_bot_go.NewBot(config.Config.GetString("wechat.http"))
 	//TODO: websocket 可作为后续被动回复使用
 	wsBot := wechat_bot_go.NewWebsocketBot(config.Config.GetString("wechat.ws"))
+	wxReply := server.NewWxReply(wsBot)
+	wsBot.BindOnTextMessage(wxReply.BindFunc)
 	wsBot.Connect() // 记得连接 不然会 nil error
 	defer wsBot.Close()
 	sched := scheduler.NewScheduler()
-	sched.InitJob(wsBot)
+	//sched.InitJob(wsBot) TODO: 注册定时任务 后续可以作为 系统添加任务，我感觉脚本可以使用 python/shell 然后返回规定的状态码
 	sched.Run()
 
 	c := make(chan os.Signal, 1)

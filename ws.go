@@ -3,7 +3,7 @@ package wechat_bot_go
 import (
 	"encoding/json"
 	"github.com/sacOO7/gowebsocket"
-	"log"
+	"time"
 )
 
 type websocketBot struct {
@@ -41,16 +41,17 @@ func (w *websocketBot) Close() {
 	w.socket.Close()
 }
 
+func (w *websocketBot) BindOnTextMessage(bindFunc func(message string, socket gowebsocket.Socket)) {
+	w.socket.OnTextMessage = bindFunc
+}
+
 func (w *websocketBot) Connect() {
-	w.socket.OnTextMessage = func(message string, socket gowebsocket.Socket) { // 接收消息
-		//TODO: 序列化
-		log.Printf("received message: %s\n", message)
-	}
 	w.socket.Connect()
 }
 
 //Send 最终会调用这个方法进行 websocket 的消息发送
 func (w *websocketBot) Send(msg interface{}) error {
+	time.Sleep(time.Second) // 统一限制一秒频率
 	b, err := json.Marshal(msg)
 	if err != nil {
 		return err

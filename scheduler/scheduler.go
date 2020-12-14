@@ -59,7 +59,7 @@ func (s *Scheduler) InitJob(bot wechat_bot_go.Bot) {
 				log.Printf("推送发生 err: %v\n", err)
 				failed += 1
 			} else {
-				time.Sleep(1 * time.Second) // 休眠一秒才发
+				//time.Sleep(1 * time.Second) // 休眠一秒才发
 				success += 1
 			}
 		}
@@ -94,7 +94,7 @@ func (s *Scheduler) InitJob(bot wechat_bot_go.Bot) {
 					log.Printf("推送发生 err: %v\n", err)
 					failed += 1
 				} else {
-					time.Sleep(1 * time.Second) // 休眠一秒才发
+					//time.Sleep(1 * time.Second) // 休眠一秒才发
 					success += 1
 				}
 			}
