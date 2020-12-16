@@ -5,6 +5,7 @@ import (
 	"fmt"
 	wechat_bot_go "github.com/ronething/wechat-bot-go"
 	"github.com/ronething/wechat-bot-go/config"
+	"github.com/ronething/wechat-bot-go/trie"
 	"github.com/sacOO7/gowebsocket"
 	"log"
 	"strings"
@@ -64,14 +65,29 @@ func (w *WxReply) BindFunc(message string, socket gowebsocket.Socket) {
 		switch msg.MsgType {
 		case wechat_bot_go.RecvTxtMsg:
 			log.Printf("接收到文本消息\n")
-			if strings.TrimSpace(router) != ""{
-				err := w.bot.SendTxtMsg(router, element) // TODO: 路由树匹配 业务处理
-				if err != nil {
-					log.Printf("发送文本消息发生错误, err: %v\n", err)
-					return
+			router = strings.TrimSpace(router)
+			if router != "" {
+				c := trie.NewContext(router, w.bot)
+				// TODO: 后续路由假如要检测 如果是 prefix 为 wechat 则不给加
+				n, params := wechatRouter.GetRouteByPath(router)
+				if n != nil {
+					c.Params = params
+					c.Params["wechat_wxid"] = element // 把参数传进去 wechat_ 为保留字
+					key := n.Pattern()
+					err := wechatRouter.GetHandlerFunc(key)(c)
+					if err != nil {
+						log.Printf("发送文本消息发生错误, err: %v\n", err)
+						return
+					}
+				} else {
+					err := w.bot.SendTxtMsg("@之后请输入相应内容,也可以使用 /help 查看帮助说明~", element)
+					if err != nil {
+						log.Printf("发送文本消息发生错误, err: %v\n", err)
+						return
+					}
 				}
-			}else{
-				err := w.bot.SendTxtMsg("未匹配到路由,请正确输入~", element)
+			} else {
+				err := w.bot.SendTxtMsg("@之后请输入相应内容,也可以使用 /help 查看帮助说明~", element)
 				if err != nil {
 					log.Printf("发送文本消息发生错误, err: %v\n", err)
 					return

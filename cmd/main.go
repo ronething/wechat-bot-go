@@ -41,6 +41,8 @@ func main() {
 	// 设置配置文件和静态变量
 	config.SetConfig(filePath)
 
+	// init wechat Router
+	server.InitWechatHandlerRouter()
 	// 初始化微信机器人
 	//httpBot := wechat_bot_go.NewBot(config.Config.GetString("wechat.http"))
 	//TODO: websocket 可作为后续被动回复使用
