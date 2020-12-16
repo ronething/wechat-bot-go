@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/ronething/wechat-bot-go/config"
 	"log"
 	"strings"
 	"time"
+
+	"github.com/ronething/wechat-bot-go/config"
 
 	"github.com/imroc/req"
 )

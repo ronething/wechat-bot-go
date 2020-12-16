@@ -3,19 +3,20 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	wechat_bot_go "github.com/ronething/wechat-bot-go"
-	"github.com/sacOO7/gowebsocket"
 	"log"
 	"os"
 	"os/signal"
 	"time"
+
+	wechat_bot_go "github.com/ronething/wechat-bot-go"
+	"github.com/sacOO7/gowebsocket"
 )
 
 type SendMsg struct {
-	Id string `json:"id"`
-	Type int64 `json:"type"`
+	Id      string `json:"id"`
+	Type    int64  `json:"type"`
 	Content string `json:"content"`
-	WxId string `json:"wxid"`
+	WxId    string `json:"wxid"`
 }
 
 func main() {
@@ -60,7 +61,7 @@ func main() {
 		WxId:    "null",
 	}
 	b, err := json.Marshal(&s)
-	if err !=nil {
+	if err != nil {
 		fmt.Printf("err: %v\n", err)
 		return
 	}

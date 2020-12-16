@@ -70,7 +70,7 @@ func (r *Router) getRoute(path string) (*node, map[string]string) {
 	return nil, nil
 }
 
-func (r *Router) GetRouteByPath(path string) (*node, map[string]string){
+func (r *Router) GetRouteByPath(path string) (*node, map[string]string) {
 	return r.getRoute(path)
 }
 

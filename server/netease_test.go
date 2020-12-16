@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/ronething/wechat-bot-go/config"
 	"testing"
 
+	"github.com/ronething/wechat-bot-go/config"
 )
 
 func TestNetEaseRank_GetTop10(t *testing.T) {
